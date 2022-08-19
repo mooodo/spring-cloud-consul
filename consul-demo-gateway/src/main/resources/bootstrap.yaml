@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: service-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        serviceName: ${spring.application.name}
+        healthCheckPath: /actuator/health #健康检查链接
+        healthCheckInterval: 15s #监控检查频率
+    loadbalancer:
+      retry:
+        enabled: true
+    gateway:
+      routes:
+        - id: ribbon
+          uri: lb://service-ribbon
+          predicates:
+            - Path=/ribbon/**
+          filters:
+            - StripPrefix= 0
+        - id: feign
+          uri: lb://service-feign
+          predicates:
+            - Path=/feign/**
+          filters:
+            - StripPrefix= 0
+        - id: hello
+          uri: lb://service-hello
+          predicates:
+            - Path=/hello/**
+          filters:
+            - StripPrefix= 1
+        - id: else
+          uri: https://www.baidu.com/
+          predicates:
+            - Path=/**
+          filters:
+            - StripPrefix= 0
+ribbon:
+  connectTimeout: 2000 # 请求连接的超时时间
+  readTimeout: 5000 # 请求处理的超时时间
+  maxAutoRetries: 0 # 对当前实例的重试次数
+  maxAutoRetriesNextServer: 3 # 切换实例的重试次数
+  okToRetryOnAllOperations: true # 对所有操作请求都进行重试
+
+server:
+  port: 8769
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

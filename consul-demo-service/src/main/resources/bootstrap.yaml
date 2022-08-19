@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: service-hello
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        serviceName: ${spring.application.name}
+        healthCheckPath: /actuator/health #健康检查链接
+        healthCheckInterval: 15s #监控检查频率
+server:
+  port: 8762
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
