@@ -11,8 +11,3 @@ spring:
         healthCheckInterval: 15s #监控检查频率
 server:
   port: 8764
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
