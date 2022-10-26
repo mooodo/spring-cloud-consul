@@ -11,3 +11,21 @@ spring:
         healthCheckInterval: 15s #监控检查频率
 server:
   port: 8764
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 2000
+  MaxAutoRetries: 0 # default 0
+  MaxAutoRetriesNextServer: 2 # default 1
+  OkToRetryOnAllOperations: true # default false
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000
+  threadpool:
+    default:
+      coreSize: 2
+      maximumSize: 2
+      maxQueueSize: -1
