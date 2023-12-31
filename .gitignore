@@ -1,6 +1,2 @@
-/pom.xml
 /.idea
-/consul-demo-feign/target
-/consul-demo-gateway/target
-/consul-demo-ribbon/target
-/consul-demo-service/target
+/*/target
